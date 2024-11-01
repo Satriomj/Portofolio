@@ -57,6 +57,11 @@ const Projects = () => {
             image="/assets/img/project7.jpg"
             description="Company profile is a project to create a landing page for the DKSolutions company which was developed using only regular HTML and CSS."
           />
+          <ProjectCard 
+            title="Sistem Presensi Karyawan"
+            image="/assets/img/presensi.jpg"
+            description="This attendance information system was developed using the Laravel framework for the backend and using Bootstrap 5 for its interface display."
+          />
         </div>
       </div>
     </section>
