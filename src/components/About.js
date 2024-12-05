@@ -17,7 +17,7 @@ const About = () => {
             Hello, I'm Website Developer
           </h1>
           <p className="mb-4 leading-relaxed">
-            Informatics Engineering graduate with an interest in website development as a Frontend Web Developer. Has internship experience at PT Darmajaya Digital Solusi and has two years of experience as a Frontend Web Developer. As well as leadership and active experience contributions to various organizations. Coworkers who are friendly and eager to learn new things.
+            Graduate of Informatics Engineering with interest in website development as Fullstack Developer. Have internship experience at PT Darmajaya Digital Solusi. then have three years of experience as Website Developer. And have leadership experience and active contribution in various organizations. Friendly co-workers and eager to learn new things and want to grow.
           </p>
         </div>
       </div>
