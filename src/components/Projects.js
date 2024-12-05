@@ -29,7 +29,7 @@ const Projects = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <ProjectCard 
             title="My Portfolio"
-            image="/assets/img/project1.png"
+            image="/assets/img/portfolioku.jpg"
             description="Implementing the user interface using HTML, CSS, JS."
           />
           <ProjectCard 
@@ -56,6 +56,11 @@ const Projects = () => {
             title="Company Profile"
             image="/assets/img/project7.jpg"
             description="Company profile is a project to create a landing page for the DKSolutions company which was developed using only regular HTML and CSS."
+          />
+          <ProjectCard 
+            title="Project Portfolio"
+            image="/assets/img/projectport.jpg"
+            description="Implementing the user interface using HTML, CSS, JS."
           />
           <ProjectCard 
             title="Sistem Kelola Sertifikat Kapal"
