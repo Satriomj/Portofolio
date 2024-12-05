@@ -57,6 +57,16 @@ const Projects = () => {
             image="/assets/img/project7.jpg"
             description="Company profile is a project to create a landing page for the DKSolutions company which was developed using only regular HTML and CSS."
           />
+          <ProjectCard 
+            title="Sistem Kelola Sertifikat Kapal"
+            image="/assets/img/skapal.jpg"
+            description="Ship certificate management information system developed using native html, css and php"
+          />
+          <ProjectCard 
+            title="Getinsika"
+            image="/assets/img/getinsika.jpg"
+            description="This Getinsika system functions as the main information center for disseminating various academic and non-academic announcements, such as seminars, campus events, scholarship information, competitions, as well as internship and career opportunities developed using native HTML, CSS, and PHP."
+          />
         </div>
       </div>
     </section>
