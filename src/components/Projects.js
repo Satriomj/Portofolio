@@ -72,6 +72,11 @@ const Projects = () => {
             image="/assets/img/getinsika.jpg"
             description="This Getinsika system functions as the main information center for disseminating various academic and non-academic announcements, such as seminars, campus events, scholarship information, competitions, as well as internship and career opportunities developed using native HTML, CSS, and PHP."
           />
+           <ProjectCard 
+            title="Sistem Presensi Qrcode"
+            image="/assets/img/ppresensi.jpg"
+            description="This QR code attendance system functions as a system used to take attendance using QR codes and is developed using HTML, CSS, Bootstrap framework and Laravel framework."
+          />
         </div>
       </div>
     </section>
