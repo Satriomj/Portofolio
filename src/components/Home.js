@@ -11,7 +11,7 @@ const Home = () => {
         <h1 className="text-4xl font-bold mb-4">
           Hallo, I'm <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">Satriomj</span>
         </h1>
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">And I'm a Fulstack Web Developer</h2>
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">And I'm a Fullstack Web Developer</h2>
         <p className="text-gray-600 mb-6">
           Jangan pernah menganggap belajar sebagai tugas, tetapi anggaplah sebagai kesempatan berharga untuk mempelajari sesuatu.
           <br />
