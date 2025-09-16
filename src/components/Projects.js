@@ -134,13 +134,13 @@ const Projects = () => {
   const projectsData = [
     {
       title: "My Portfolio",
-      image: "/assets/img/portfolioku.jpg",
+      image: "/assets/img/myporto.jpg",
       description: "Implementing the user interface using HTML, CSS, JS.",
       tags: ["HTML", "CSS", "JavaScript"],
       category: "Web Development",
       links: {
-        github: "https://github.com/yourusername/portfolio",
-        live: "https://yourportfolio.com"
+        github: "https://github.com/Satriomj/Portofolio",
+        live: "https://satriomjs.vercel.app/"
       }
     },
     {
