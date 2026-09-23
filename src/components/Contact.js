@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   FaEnvelope, FaMapMarkerAlt, FaPhone, FaPaperPlane,
@@ -16,6 +16,21 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError] = useState(false);
+
+  // ==== VISITOR COUNTER STATE ====
+  const [visits, setVisits] = useState(null);
+
+  useEffect(() => {
+    // Fetch total visits dari GoatCounter (JSON endpoint)
+    fetch("https://satriomjs.goatcounter.com/counter/TOTAL.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setVisits(data.count);
+      })
+      .catch(() => {
+        setVisits(null);
+      });
+  }, []);
 
   const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -157,16 +172,13 @@ const Contact = () => {
             variants={containerVariants}
             className="lg:col-span-5"
           >
-            {/* Card container untuk info */}
             <motion.div
               variants={itemVariants}
               className="relative p-6 sm:p-8 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm overflow-hidden"
             >
-              {/* Corner accents */}
               <div className="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-cyan-400/40" />
               <div className="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-purple-400/40" />
 
-              {/* Contact info */}
               <div className="flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-cyan-300/80 mb-6">
                 <span className="w-4 h-px bg-cyan-400/60" />
                 CONTACT INFO
@@ -202,10 +214,8 @@ const Contact = () => {
                 ))}
               </div>
 
-              {/* Divider */}
               <div className="my-6 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-              {/* Social */}
               <div className="flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-cyan-300/80 mb-4">
                 <span className="w-4 h-px bg-cyan-400/60" />
                 FOLLOW ME
@@ -230,7 +240,6 @@ const Contact = () => {
               </div>
             </motion.div>
 
-            {/* CTA — full width di bawah card */}
             <motion.a
               variants={itemVariants}
               href="/assets/file/CV-Satrio Maruli Jaya Sianturi.pdf"
@@ -258,7 +267,6 @@ const Contact = () => {
               variants={itemVariants}
               className="relative p-6 sm:p-8 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm overflow-hidden"
             >
-              {/* Corner accents */}
               <div className="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-cyan-400/40" />
               <div className="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-purple-400/40" />
 
@@ -268,7 +276,6 @@ const Contact = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Name + Email */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
                     <label htmlFor="name" className={labelClass}>
@@ -302,7 +309,6 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {/* Subject */}
                 <div>
                   <label htmlFor="subject" className={labelClass}>
                     Subject
@@ -319,7 +325,6 @@ const Contact = () => {
                   />
                 </div>
 
-                {/* Message */}
                 <div>
                   <label htmlFor="message" className={labelClass}>
                     Your Message
@@ -336,7 +341,6 @@ const Contact = () => {
                   />
                 </div>
 
-                {/* Submit */}
                 <div className="pt-2">
                   <motion.button
                     type="submit"
@@ -419,21 +423,56 @@ const Contact = () => {
           </motion.div>
         </div>
 
-        {/* ================= FOOTER NOTE ================= */}
+        {/* ================= FOOTER NOTE + LIVE STATS ================= */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="mt-16 sm:mt-20 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4"
+          className="mt-16 sm:mt-20 pt-8 border-t border-white/5"
         >
-          <div className="flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-gray-500 uppercase">
-            <span className="w-6 h-px bg-gray-600" />
-            Satriomj — {new Date().getFullYear()}
+          {/* Baris 1: copyright + built with */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-gray-500 uppercase">
+              <span className="w-6 h-px bg-gray-600" />
+              Satriomj — {new Date().getFullYear()}
+            </div>
+            <div className="flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-gray-500 uppercase">
+              Built with React & Tailwind (Satriomjs)
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            </div>
           </div>
-          <div className="flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-gray-500 uppercase">
-            Built with React & Tailwind (Satriomjs)
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+
+          {/* Baris 2: LIVE VISITOR STATS */}
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-[10px] font-mono tracking-[0.25em] text-gray-500 uppercase">
+              <span className="w-6 h-px bg-gray-600" />
+              Total Visitors
+            </div>
+
+            <a
+              href="https://satriomjs.goatcounter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/[0.02] hover:border-cyan-400/40 hover:bg-white/[0.04] transition-all duration-300"
+              title="View live stats on GoatCounter"
+            >
+              {/* Dot pulse */}
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
+              </span>
+
+              {/* Angka kunjungan */}
+              <span className="text-sm font-bold bg-gradient-to-r from-cyan-300 to-purple-400 bg-clip-text text-transparent font-mono tabular-nums min-w-[2ch] text-center">
+                {visits !== null ? visits : "—"}
+              </span>
+
+              {/* Label */}
+              <span className="text-[10px] font-mono tracking-widest text-gray-500 uppercase group-hover:text-cyan-400 transition-colors">
+                Live Stats
+              </span>
+            </a>
           </div>
         </motion.div>
       </div>
