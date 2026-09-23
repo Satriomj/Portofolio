@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
-import { FaInstagram, FaLinkedin, FaGithub, FaDownload, FaArrowRight, FaCode, FaRocket, FaUserAstronaut } from "react-icons/fa";
+import {
+  FaInstagram, FaLinkedin, FaGithub, FaDownload, FaArrowRight,
+  FaCode, FaRocket, FaUserAstronaut,
+} from "react-icons/fa";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Typed from "typed.js";
 
 const Home = () => {
-  // Efek typing untuk teks profesi
+  // Typing effect
   useEffect(() => {
     const options = {
       strings: [
@@ -17,503 +20,350 @@ const Home = () => {
       backSpeed: 40,
       backDelay: 1800,
       loop: true,
-      cursorChar: '|',
+      cursorChar: "|",
     };
-    
     const typed = new Typed("#typed-text", options);
-    
-    return () => {
-      typed.destroy();
-    };
+    return () => typed.destroy();
   }, []);
 
-  // Mouse tracking untuk efek parallax
+  // Mouse parallax (hanya desktop)
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 100, damping: 30 });
   const springY = useSpring(mouseY, { stiffness: 100, damping: 30 });
-  const rotateX = useTransform(springY, [-200, 200], [10, -10]);
-  const rotateY = useTransform(springX, [-200, 200], [-10, 10]);
+  const rotateX = useTransform(springY, [-200, 200], [6, -6]);
+  const rotateY = useTransform(springX, [-200, 200], [-6, 6]);
 
-  // Variasi animasi
+  // Variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.12, delayChildren: 0.15 },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
+    hidden: { y: 24, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
+      transition: { duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] },
     },
   };
 
   const imageVariants = {
-    hidden: { scale: 0.9, rotate: -5, opacity: 0 },
+    hidden: { scale: 0.94, opacity: 0, y: 20 },
     visible: {
       scale: 1,
-      rotate: 0,
       opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
+      y: 0,
+      transition: { duration: 0.9, ease: [0.6, -0.05, 0.01, 0.99] },
     },
   };
 
   const socialLinks = [
-    { icon: <FaInstagram />, url: "https://instagram.com/satriomjs", color: "from-pink-400 to-purple-500", hoverColor: "from-pink-300 to-purple-400", label: "Instagram" },
-    { icon: <FaLinkedin />, url: "https://linkedin.com/in/satriomj", color: "from-blue-400 to-cyan-400", hoverColor: "from-blue-300 to-cyan-300", label: "LinkedIn" },
-    { icon: <FaGithub />, url: "https://github.com/Satriomj", color: "from-gray-600 to-gray-800", hoverColor: "from-gray-500 to-gray-700", label: "GitHub" }
+    { icon: <FaInstagram />, url: "https://instagram.com/satriomjs", label: "Instagram" },
+    { icon: <FaLinkedin />, url: "https://linkedin.com/in/satriomj", label: "LinkedIn" },
+    { icon: <FaGithub />, url: "https://github.com/Satriomj", label: "GitHub" },
   ];
 
-  // Glowing particles
-  const particles = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 4 + 2,
-    duration: Math.random() * 10 + 10,
-    delay: Math.random() * 5,
-    color: Math.random() > 0.5 ? '#22d3ee' : '#a855f7',
-  }));
+  const stats = [
+    { label: "Projects", value: "20+" },
+    { label: "Clients", value: "15+" },
+    { label: "Satisfaction", value: "100%" },
+  ];
 
   return (
-    <section 
-      id="home" 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 px-4"
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center overflow-hidden pt-32 pb-16 md:py-24 px-5 sm:px-6 md:px-8"
       style={{
-        background: 'radial-gradient(ellipse at 0% 0%, #0f172a 0%, #020617 100%)',
+        background: "radial-gradient(ellipse at 20% 0%, #0f172a 0%, #020617 70%)",
       }}
       onMouseMove={(e) => {
+        if (window.innerWidth < 1024) return;
         const rect = e.currentTarget.getBoundingClientRect();
         mouseX.set(e.clientX - rect.left - rect.width / 2);
         mouseY.set(e.clientY - rect.top - rect.height / 2);
       }}
     >
-      {/* Animated Background Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {particles.map((particle) => (
-          <motion.div
-            key={particle.id}
-            className="absolute rounded-full"
-            style={{
-              width: particle.size,
-              height: particle.size,
-              backgroundColor: particle.color,
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
-              boxShadow: `0 0 ${particle.size * 3}px ${particle.color}44`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 20, 0],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: particle.duration,
-              delay: particle.delay,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
+      {/* Background mesh */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-40 left-1/4 w-[400px] sm:w-[600px] lg:w-[700px] h-[400px] sm:h-[600px] lg:h-[700px] bg-cyan-500/10 rounded-full blur-[100px] sm:blur-[140px]" />
+        <div className="absolute -bottom-40 right-1/4 w-[350px] sm:w-[500px] lg:w-[600px] h-[350px] sm:h-[500px] lg:h-[600px] bg-purple-500/10 rounded-full blur-[100px] sm:blur-[140px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(2,6,23,0.6)_100%)]" />
+      </div>
+
+      {/* Grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Social rail (desktop kiri) — fixed biar selalu di pinggir viewport */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
+        className="hidden xl:flex flex-col items-center gap-5 fixed left-6 top-1/2 -translate-y-1/2 z-20"
+      >
+        <div className="w-px h-16 bg-gradient-to-b from-transparent to-cyan-400/40" />
+        {socialLinks.map((s, i) => (
+          <a
+            key={i}
+            href={s.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+            aria-label={s.label}
+          >
+            <span className="text-lg">{s.icon}</span>
+            <span className="absolute left-8 top-1/2 -translate-y-1/2 whitespace-nowrap text-xs font-mono tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {s.label}
+            </span>
+          </a>
         ))}
-      </div>
+        <div className="w-px h-16 bg-gradient-to-t from-transparent to-purple-400/40" />
+      </motion.div>
 
-      {/* Animated Gradient Orbs */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="container mx-auto z-10 relative max-w-7xl w-full">
         <motion.div
-          animate={{
-            x: ['0%', '10%', '0%'],
-            y: ['0%', '15%', '0%'],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-gradient-to-br from-cyan-500/20 to-purple-600/20 rounded-full filter blur-3xl"
-        />
-        <motion.div
-          animate={{
-            x: ['0%', '-10%', '0%'],
-            y: ['0%', '-10%', '0%'],
-            scale: [1, 1.3, 1],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-          className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-gradient-to-tr from-blue-500/20 to-pink-500/20 rounded-full filter blur-3xl"
-        />
-      </div>
-
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 opacity-[0.03]">
-        <div className="w-full h-full" style={{
-          backgroundImage: `radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
-        }} />
-      </div>
-
-      {/* Animated Border Lines */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          animate={{ x: ['-100%', '100%'] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="absolute top-1/3 w-[200%] h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent"
-        />
-        <motion.div
-          animate={{ x: ['100%', '-100%'] }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'linear', delay: 5 }}
-          className="absolute bottom-1/3 w-[200%] h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent"
-        />
-      </div>
-
-      <div className="container mx-auto z-10 relative">
-        <motion.div 
-          className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-20"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-16 items-center"
           initial="hidden"
           animate="visible"
           variants={containerVariants}
         >
-          {/* Image Column - with 3D hover effect */}
-          <motion.div 
-            className="w-full lg:w-5/12 flex justify-center lg:order-2 perspective-1000"
-            variants={imageVariants}
-            style={{
-              perspective: '1000px',
-            }}
-          >
-            <motion.div
-              style={{
-                rotateX: rotateX,
-                rotateY: rotateY,
-                transformStyle: 'preserve-3d',
-              }}
-              className="relative"
-            >
-              {/* Outer Glow Ring */}
-              <motion.div
-                className="absolute -inset-8 rounded-full"
-                style={{
-                  background: 'conic-gradient(from 0deg, #22d3ee, #a855f7, #22d3ee, #a855f7, #22d3ee)',
-                  opacity: 0.15,
-                  filter: 'blur(20px)',
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              />
-
-              {/* Rotating Ring */}
-              <motion.div
-                className="absolute -inset-4 rounded-full border-2 border-cyan-400/20"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                style={{
-                  borderImage: 'linear-gradient(45deg, #22d3ee, #a855f7) 1',
-                }}
-              />
-
-              {/* Second Rotating Ring */}
-              <motion.div
-                className="absolute -inset-6 rounded-full border border-dashed border-purple-400/20"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              />
-
-              {/* Image Container */}
-              <div className="relative w-72 h-72 md:w-88 md:h-88 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl shadow-cyan-500/20">
-                {/* Gradient Overlay */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-cyan-500/30 via-transparent to-purple-600/30 z-10"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1 }}
-                />
-                
-                {/* Image with zoom effect */}
-                <motion.img 
-                  src="/assets/img/profilku.jpg" 
-                  alt="Satriomj" 
-                  className="w-full h-full object-cover"
-                  initial={{ scale: 1.3 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 1.2, ease: [0.6, -0.05, 0.01, 0.99] }}
-                  whileHover={{ scale: 1.05 }}
-                />
-
-                {/* Animated Border Overlay */}
-                <motion.div
-                  className="absolute inset-0 z-10 rounded-full"
-                  style={{
-                    border: '3px solid transparent',
-                    background: 'linear-gradient(135deg, rgba(34,211,238,0.3), rgba(168,85,247,0.3)) border-box',
-                    WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
-                    WebkitMaskComposite: 'xor',
-                    maskComposite: 'exclude',
-                  }}
-                  animate={{
-                    borderColor: ['rgba(34,211,238,0.5)', 'rgba(168,85,247,0.5)', 'rgba(34,211,238,0.5)'],
-                  }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-              </div>
-              
-              {/* Floating Badges with enhanced design */}
-              <motion.div
-                className="absolute -top-4 -right-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg shadow-cyan-500/30 z-20"
-                initial={{ y: 30, opacity: 0, scale: 0.8 }}
-                animate={{ y: 0, opacity: 1, scale: 1 }}
-                transition={{ delay: 1, duration: 0.6, type: "spring" }}
-                whileHover={{ scale: 1.1, y: -5 }}
-              >
-                <span className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-white rounded-full animate-ping"></span>
-                  <span className="w-2 h-2 bg-white rounded-full absolute animate-ping opacity-75"></span>
-                  Available for work
-                </span>
-              </motion.div>
-              
-              <motion.div
-                className="absolute -bottom-4 -left-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg shadow-purple-500/30 z-20"
-                initial={{ y: 30, opacity: 0, scale: 0.8 }}
-                animate={{ y: 0, opacity: 1, scale: 1 }}
-                transition={{ delay: 1.3, duration: 0.6, type: "spring" }}
-                whileHover={{ scale: 1.1, y: -5 }}
-              >
-                <span className="flex items-center gap-2">
-                  <FaRocket className="text-white animate-pulse" />
-                  3+ Years Experience
-                </span>
-              </motion.div>
-
-              {/* Floating Icons */}
-              <motion.div
-                className="absolute top-20 -right-8 text-cyan-400 text-2xl opacity-50 z-20"
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                <FaCode />
-              </motion.div>
-              <motion.div
-                className="absolute bottom-20 -left-8 text-purple-400 text-2xl opacity-50 z-20"
-                animate={{ y: [10, -10, 10] }}
-                transition={{ duration: 4, repeat: Infinity }}
-              >
-                <FaUserAstronaut />
-              </motion.div>
-            </motion.div>
-          </motion.div>
-
-          {/* Content Column - Enhanced */}
-          <motion.div 
-            className="w-full lg:w-7/12 lg:order-1"
+          {/* ======================= CONTENT ======================= */}
+          <motion.div
             variants={containerVariants}
+            className="lg:col-span-7 order-2 lg:order-1 text-center lg:text-left"
           >
-            <motion.span 
+            {/* Label kecil */}
+            <motion.div
               variants={itemVariants}
-              className="inline-block px-5 py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-cyan-300 text-sm font-bold mb-5 border border-cyan-500/30 backdrop-blur-sm shadow-lg shadow-cyan-500/10"
+              className="inline-flex items-center gap-3 mb-5 sm:mb-6 text-[10px] sm:text-xs font-mono tracking-[0.25em] text-cyan-300/80"
             >
-              ✦ Welcome to my portfolio ✦
-            </motion.span>
-            
-            <motion.h1 
+              <span className="w-6 sm:w-8 h-px bg-cyan-400/60" />
+              WELCOME TO MY PORTFOLIO
+            </motion.div>
+
+            {/* Nama besar */}
+            <motion.h1
               variants={itemVariants}
-              className="text-5xl md:text-7xl font-black mb-5 leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.02] tracking-tight mb-5 sm:mb-6"
             >
-              <span className="text-transparent bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text">
-                Hi, I'm
-              </span>{" "}
-              <span className="relative">
-                <span className="bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  Satriomj
-                </span>
-                <motion.span
-                  className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-400 rounded-full"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 1.5, duration: 0.8 }}
-                />
+              <span className="block text-gray-200">Hi, I'm</span>
+              <span className="block bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-400 bg-clip-text text-transparent">
+                Satriomj
               </span>
             </motion.h1>
-            
-            <motion.h2 
+
+            {/* Role typing — pakai cursor bawaan Typed.js */}
+            <motion.div
               variants={itemVariants}
-              className="text-2xl md:text-3xl font-bold mb-6 text-gray-300 flex flex-wrap items-center gap-3"
+              className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 mb-6 sm:mb-8 text-lg sm:text-xl md:text-2xl font-semibold text-gray-300 min-h-[32px] sm:min-h-[36px]"
             >
-              And I'm a{" "}
-              <span className="relative">
-                <span id="typed-text" className="text-transparent bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text"></span>
-                <span className="inline-block w-3 h-8 bg-gradient-to-b from-cyan-400 to-purple-500 animate-blink rounded-sm ml-1"></span>
-              </span>
-            </motion.h2>
-            
-            <motion.div 
+              <span className="text-gray-500 font-mono text-sm sm:text-base">&gt;</span>
+              <span id="typed-text" className="text-cyan-300"></span>
+            </motion.div>
+
+            {/* Quote */}
+            <motion.blockquote
               variants={itemVariants}
-              className="relative mb-8 p-6 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm rounded-2xl border border-white/10 shadow-xl hover:shadow-cyan-500/5 transition-shadow duration-500"
+              className="relative pl-5 sm:pl-6 mb-8 sm:mb-10 border-l-2 text-left max-w-xl mx-auto lg:mx-0"
+              style={{
+                borderImage:
+                  "linear-gradient(to bottom, rgba(34,211,238,0.6), rgba(168,85,247,0.6)) 1",
+              }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-pink-500/5 rounded-2xl" />
-              <p className="text-gray-400 text-lg leading-relaxed relative z-10">
-                <span className="text-4xl text-cyan-400 font-serif mr-1">"</span>
-                Jangan pernah menganggap belajar sebagai tugas, tetapi anggaplah sebagai kesempatan berharga untuk mempelajari sesuatu.
-                <span className="text-4xl text-purple-400 font-serif ml-1">"</span>
-                <br />
-                <span className="italic text-gray-500 mt-3 block text-right text-sm">
-                  — Albert Einstein
-                </span>
+              <p className="text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed italic">
+                "Jangan pernah menganggap belajar sebagai tugas, tetapi anggaplah sebagai
+                kesempatan berharga untuk mempelajari sesuatu."
               </p>
-            </motion.div>
-            
-            {/* Social Media Links - Enhanced */}
-            <motion.div 
+              <footer className="mt-3 text-[10px] sm:text-xs font-mono tracking-widest text-gray-500">
+                — ALBERT EINSTEIN
+              </footer>
+            </motion.blockquote>
+
+            {/* CTA */}
+            <motion.div
               variants={itemVariants}
-              className="flex flex-wrap gap-5 mb-10"
-            >
-              {socialLinks.map((social, index) => (
-                <motion.div
-                  key={index}
-                  className="relative group"
-                  whileHover={{ y: -5 }}
-                >
-                  <motion.a
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.15 }}
-                    whileTap={{ scale: 0.9 }}
-                    className={`block p-4 rounded-2xl bg-gradient-to-br ${social.color} text-white text-2xl shadow-lg hover:shadow-2xl transition-all duration-300 relative overflow-hidden`}
-                  >
-                    {/* Shine effect */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0"
-                      initial={{ x: '-200%', rotate: 30 }}
-                      whileHover={{ x: '200%' }}
-                      transition={{ duration: 0.8 }}
-                      style={{ transform: 'skewX(-20deg)' }}
-                    />
-                    {social.icon}
-                    <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                      {social.label}
-                    </span>
-                  </motion.a>
-                </motion.div>
-              ))}
-            </motion.div>
-            
-            {/* CTA Buttons - Enhanced */}
-            <motion.div 
-              variants={itemVariants}
-              className="flex flex-wrap gap-5"
+              className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-10 sm:mb-12 justify-center lg:justify-start"
             >
               <motion.a
                 href="/assets/file/CV-Satrio Maruli Jaya Sianturi.pdf"
                 download
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="relative px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 text-white font-bold shadow-xl shadow-cyan-500/30 hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 flex items-center gap-3 overflow-hidden group"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative inline-flex items-center justify-center gap-3 px-6 sm:px-7 py-3.5 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold shadow-lg shadow-cyan-500/20 overflow-hidden w-full sm:w-auto"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <span className="relative z-10 flex items-center gap-3">
-                  <FaDownload className="group-hover:animate-bounce" />
-                  Download CV
-                </span>
-                <motion.span
-                  className="absolute inset-0 border-2 border-white/20 rounded-2xl"
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
+                <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <FaDownload className="relative z-10 group-hover:animate-bounce" />
+                <span className="relative z-10 text-sm sm:text-base">Download CV</span>
               </motion.a>
-              
+
               <motion.a
                 href="#projects"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group px-8 py-4 rounded-2xl bg-white/5 backdrop-blur-sm text-white font-bold border border-white/20 hover:border-cyan-400/50 hover:bg-white/10 transition-all duration-300 flex items-center gap-3 shadow-xl hover:shadow-cyan-500/10"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="group inline-flex items-center justify-center gap-3 px-6 sm:px-7 py-3.5 rounded-full text-white font-semibold border border-white/15 hover:border-cyan-400/60 transition-colors duration-300 w-full sm:w-auto"
               >
-                View Projects 
-                <FaArrowRight className="group-hover:translate-x-2 transition-transform duration-300 group-hover:text-cyan-400" />
+                <span className="text-sm sm:text-base">View Projects</span>
+                <FaArrowRight className="group-hover:translate-x-1.5 transition-transform duration-300 group-hover:text-cyan-400" />
               </motion.a>
             </motion.div>
 
-            {/* Stats Bar - Enhanced with icons */}
+            {/* Stats */}
             <motion.div
               variants={itemVariants}
-              className="flex gap-10 mt-10 pt-8 border-t border-white/5"
+              className="grid grid-cols-3 gap-2 sm:gap-4 pt-6 border-t border-white/5 max-w-md mx-auto lg:mx-0"
             >
-              {[
-                { label: 'Projects', value: '20+', icon: '🚀' },
-                { label: 'Clients', value: '15+', icon: '👥' },
-                { label: 'Satisfaction', value: '100%', icon: '⭐' },
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="text-center group cursor-default"
-                  whileHover={{ y: -3 }}
-                >
-                  <div className="text-3xl font-black text-transparent bg-gradient-to-r from-cyan-300 to-purple-400 bg-clip-text">
+              {stats.map((stat, i) => (
+                <div key={i} className="flex flex-col items-center lg:items-start">
+                  <span className="text-xl sm:text-2xl font-black bg-gradient-to-r from-cyan-300 to-purple-400 bg-clip-text text-transparent">
                     {stat.value}
-                  </div>
-                  <div className="flex items-center justify-center gap-1.5 text-gray-400 text-sm font-medium mt-1">
-                    <span>{stat.icon}</span>
+                  </span>
+                  <span className="text-[9px] sm:text-[10px] font-mono tracking-widest text-gray-500 uppercase mt-0.5 text-center lg:text-left">
                     {stat.label}
-                  </div>
-                </motion.div>
+                  </span>
+                </div>
               ))}
+            </motion.div>
+
+            {/* Mobile & tablet social */}
+            <div className="flex xl:hidden justify-center lg:justify-start gap-4 mt-8">
+              {socialLinks.map((s, i) => (
+                <a
+                  key={i}
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-cyan-400 hover:border-cyan-400/40 transition-all"
+                  aria-label={s.label}
+                >
+                  {s.icon}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* ======================= IMAGE ======================= */}
+          <motion.div
+            variants={imageVariants}
+            className="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end"
+            style={{ perspective: "1200px" }}
+          >
+            <motion.div
+              style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+              className="relative w-[240px] sm:w-[320px] md:w-[380px] lg:w-[400px] xl:w-[440px] max-w-full"
+            >
+              {/* Frame */}
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-cyan-500/10">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-purple-600/10 z-10 pointer-events-none" />
+
+                <motion.img
+                  src="/assets/img/profilku.jpg"
+                  alt="Satriomj"
+                  className="w-full h-auto object-cover block"
+                  initial={{ scale: 1.15 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 1.2, ease: [0.6, -0.05, 0.01, 0.99] }}
+                  whileHover={{ scale: 1.04 }}
+                />
+
+                {/* Corner accents */}
+                <div className="absolute top-2.5 left-2.5 w-5 h-5 border-t-2 border-l-2 border-cyan-400/60 z-20" />
+                <div className="absolute bottom-2.5 right-2.5 w-5 h-5 border-b-2 border-r-2 border-purple-400/60 z-20" />
+
+                {/* Caption strip */}
+                <div className="absolute bottom-0 left-0 right-0 z-20 px-3 sm:px-4 py-2.5 sm:py-3 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-[9px] sm:text-xs font-mono tracking-widest text-cyan-300">
+                    <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
+                    AVAILABLE FOR WORK
+                  </div>
+                  <FaRocket className="text-purple-400 text-xs sm:text-sm" />
+                </div>
+              </div>
+
+              {/* Chip: experience — turunin biar gak nabrak caption */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 1.1, duration: 0.6, type: "spring" }}
+                className="absolute -bottom-8 sm:-bottom-9 left-2 sm:-left-5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gray-900/90 backdrop-blur border border-white/10 text-[9px] sm:text-xs font-mono tracking-widest text-gray-300 shadow-xl z-20"
+              >
+                <span className="text-cyan-400">3+</span> YEARS EXP
+              </motion.div>
+
+              {/* Chip: role */}
+              <motion.div
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 1.3, duration: 0.6, type: "spring" }}
+                className="absolute -top-4 right-2 sm:-top-5 sm:-right-5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gray-900/90 backdrop-blur border border-white/10 text-[9px] sm:text-xs font-mono tracking-widest text-gray-300 shadow-xl z-20"
+              >
+                <FaCode className="inline text-purple-400 mr-1.5" />
+                WEB & QA
+              </motion.div>
+
+              {/* Decorative icon */}
+              <motion.div
+                className="hidden md:block absolute top-1/3 -right-10 text-cyan-400/30 text-3xl"
+                animate={{ y: [-8, 8, -8] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <FaUserAstronaut />
+              </motion.div>
+
+              {/* Blueprint dots */}
+              <div
+                className="absolute -inset-4 sm:-inset-6 -z-10 opacity-30"
+                style={{
+                  backgroundImage: `radial-gradient(rgba(34,211,238,0.25) 1px, transparent 1px)`,
+                  backgroundSize: "18px 18px",
+                  maskImage:
+                    "radial-gradient(circle at center, black 40%, transparent 75%)",
+                  WebkitMaskImage:
+                    "radial-gradient(circle at center, black 40%, transparent 75%)",
+                }}
+              />
             </motion.div>
           </motion.div>
         </motion.div>
 
-        {/* Scroll Indicator */}
+        {/* Scroll indicator */}
         <motion.div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.6 }}
+          className="hidden md:flex flex-col items-center gap-3 absolute bottom-8 right-6 lg:right-8 text-gray-500"
         >
-          <span className="text-xs uppercase tracking-widest font-medium text-gray-500">Scroll</span>
-          <div className="w-6 h-10 border-2 border-gray-700/50 rounded-full flex justify-center">
-            <motion.div
-              className="w-1.5 h-3 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-full mt-2"
-              animate={{ y: [0, 15, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-          </div>
+          <span
+            className="text-[10px] font-mono tracking-[0.4em] uppercase"
+            style={{ writingMode: "vertical-rl" }}
+          >
+            Scroll
+          </span>
+          <motion.div
+            className="w-px h-16 bg-gradient-to-b from-cyan-400/60 to-transparent"
+            animate={{ scaleY: [0.3, 1, 0.3], originY: 0 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          />
         </motion.div>
       </div>
 
-      {/* Custom CSS for animations */}
+      {/* Custom CSS */}
       <style jsx>{`
-        .perspective-1000 {
-          perspective: 1000px;
-        }
         @keyframes blink {
           0%, 100% { opacity: 1; }
           50% { opacity: 0; }
         }
         .animate-blink {
           animation: blink 1s step-end infinite;
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
         }
         ::selection {
           background: rgba(34, 211, 238, 0.3);
