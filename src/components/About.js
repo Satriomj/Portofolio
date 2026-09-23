@@ -239,10 +239,7 @@ const About = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-pink-500/5 rounded-2xl" />
               <p className="text-gray-400 text-base leading-relaxed relative z-10">
-                Graduate of Informatics Engineering with interest in website development as Fullstack Developer. 
-                I have internship experience at PT Darmajaya Digital Solusi and three years of professional experience 
-                building modern web applications. With leadership experience and active contributions in various 
-                organizations, I'm a friendly co-worker who's always eager to learn new technologies and grow professionally.
+                Informatics Engineering graduate with professional experience as a Manual Tester at PT Braincode Sinergi Nusantara for one year, as well as two years of experience as a Web Developer. Interested in software quality assurance, website development, and system testing, with hands-on experience in functional testing, user support, bug reporting, and system improvement. Also has internship experience at PT Darmajaya Digital Solusi, leadership experience, and active contributions in various organizations. A friendly coworker, detail-oriented, and eager to learn new things.
               </p>
             </motion.div>
             
